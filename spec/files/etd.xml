@@ -1,0 +1,16 @@
+<etd>
+  <destination>Fremont</destination>
+  <abbreviation>FRMT</abbreviation>
+  <estimate>
+    <minutes>Arrived</minutes>
+    <platform>2</platform>
+    <direction>South</direction>
+    <length>3</length>
+  </estimate>
+  <estimate>
+    <minutes>13</minutes>
+    <platform>2</platform>
+    <direction>South</direction>
+    <length>3</length>
+  </estimate>
+</etd>
