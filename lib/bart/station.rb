@@ -14,7 +14,6 @@ module Bart
   class Station
 
     attr_reader :abbr
-    attr_accessor :departures
 
     # DEBUG
     attr_reader :document
@@ -43,6 +42,11 @@ module Bart
       ID_TO_NAME[abbr]
     end
 
+    def departures
+      return @_departures if defined?(@_departures);
+      @_departures = load_departures
+    end
+
     # fetch
     def load_departures
       params = {
@@ -58,13 +62,13 @@ module Bart
         http.request(ssan_etd)
       end
 
-      store_departures(response.body)
+      parse_departures(response.body)
     end
 
-    def store_departures(xml)
+    def parse_departures(xml)
       document = Nokogiri::XML.parse(xml)
       @document = document
-      @departures = document.css('etd').inject([]) do |memo, i|
+      document.css('etd').inject([]) do |memo, i|
         memo << Etd.new(i.to_s)
       end
     end

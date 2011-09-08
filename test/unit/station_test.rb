@@ -1,5 +1,8 @@
 require 'minitest/autorun'
+require 'fakeweb'
 require 'bart/station'
+
+FakeWeb.allow_net_connect = false
 
 class StationTest < MiniTest::Unit::TestCase
 
@@ -20,10 +23,35 @@ class StationTest < MiniTest::Unit::TestCase
     assert_equal('rock', station.abbr)
   end
 
-  def test_a_station_initialized_from_xml_should_have_departures
-    response = File.expand_path('../../responses/station.xml', __FILE__)
-    response = File.read(response)
-    station = Station.from_xml(response)
+  def test_asking_for_departures_should_trigger_a_fetch
+    uri = 'http://api.bart.gov/api/etd.aspx?cmd=etd&orig=rock&key=MW9S-E7SL-26DU-VV8V'
+    FakeWeb.register_uri(:get, uri, :body => 'hello')
+
+    station = Station.new('rock')
+    station.departures
+    assert FakeWeb.last_request
+  end
+
+  def test_asking_for_departures_twice_should_not_trigger_a_fetch
+    uri = 'http://api.bart.gov/api/etd.aspx?cmd=etd&orig=rock&key=MW9S-E7SL-26DU-VV8V'
+    FakeWeb.register_uri(:get, uri, :body => 'hello')
+
+    station = Station.new('rock')
+    station.departures
+    assert FakeWeb.last_request
+
+    FakeWeb.clean_registry
+    station.departures
+  end
+
+  def test_should_parse_xml
+    uri = 'http://api.bart.gov/api/etd.aspx?cmd=etd&orig=rock&key=MW9S-E7SL-26DU-VV8V'
+    xml = File.read(File.expand_path('../../responses/station.xml', __FILE__))
+    FakeWeb.register_uri(:get, uri, :body => xml)
+
+    station = Station.new('rock')
+    station.departures
+
     assert_equal(2, station.departures.size)
   end
 
