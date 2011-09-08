@@ -10,5 +10,7 @@ Gem::Specification.new do |s|
 
   s.require_path = "lib"
   s.files = Dir["lib/**/*.rb"]
+
   s.add_dependency "nokogiri"
+  s.add_development_dependency "fakeweb"
 end
