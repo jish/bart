@@ -19,4 +19,11 @@ And see when then next trains are supposed to arrive
     end
     # => [["Pittsburg/Bay Point", [5, 25, 50]], ["Millbrae", [5, 25, 46]]]
 
+Output a list of upcoming departures:
+
+    require 'bart'
+    puts Bart(:powl).departures
+    # San Francisco Int'l Airport 2, 22
+    # Pittsburg/Bay Point 4, 19
+
 _NOTE: This is still beta software. All public APIs are subject to change_
