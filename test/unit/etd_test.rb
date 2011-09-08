@@ -18,4 +18,9 @@ class EtdTest < MiniTest::Unit::TestCase
     assert_equal(2, etd.estimates.size)
   end
 
+  def test_should_to_s
+    etd = Etd.new(RESPONSE)
+    assert_equal('Fremont 0, 13', etd.to_s)
+  end
+
 end

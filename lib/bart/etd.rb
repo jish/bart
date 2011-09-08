@@ -15,5 +15,9 @@ module Bart
       @estimates   = estimates.inject([]) { |memo, i| memo << Estimate.new(i.to_s) }
     end
 
+    def to_s
+      "#{destination.name} #{estimates.map(&:minutes) * ', '}"
+    end
+
   end
 end
