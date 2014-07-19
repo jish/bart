@@ -15,6 +15,7 @@ module Bart
     # Used this instead of attr_writer in case we need to do cleanup when the abbr changes...
     def abbr=(x)
       @abbr = x.upcase
+      @_departures = nil
     end
 
     def abbr
@@ -48,8 +49,8 @@ module Bart
     end
 
     def departures
-      return @_departures if defined?(@_departures);
-      @_departures = load_departures
+      @_departures ||= load_departures
+      @_departures
     end
 
     # fetch
