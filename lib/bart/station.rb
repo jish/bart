@@ -21,10 +21,10 @@ module Bart
     # new ones over and over again. We'll leave it alone for now, for
     # simplicity.
     def initialize(options = {})
-      @abbr       = options[:abbr]     ? options[:abbr]     : nil
-      @api_key    = options[:api_key]  ? options[:api_key]  : 'MW9S-E7SL-26DU-VV8V'
-      @stations   = options[:stations] ? options[:stations] : nil
-      @load_first = options[:stations] ? options[:stations] : true
+      @abbr       = options[:abbr]       ? options[:abbr]       : nil
+      @api_key    = options[:api_key]    ? options[:api_key]    : 'MW9S-E7SL-26DU-VV8V'
+      @stations   = options[:stations]   ? options[:stations]   : nil
+      @load_first = options[:load_first] ? options[:load_first] : true
 
       @stations = self.load_stations if self.load_first
     end
