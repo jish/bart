@@ -8,10 +8,10 @@ module Bart
 
     def initialize(xml)
       document  = Nokogiri::XML.parse(xml)
-      abbr      = document.css('abbreviation').text
+      abbr      = document.at_css('abbreviation').text
       estimates = document.css('estimate')
 
-      @destination = Station.new(abbr)
+      @destination = Station.new(abbr: abbr.upcase)
       @estimates   = estimates.inject([]) { |memo, i| memo << Estimate.new(i.to_s) }
     end
 

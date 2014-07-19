@@ -2,8 +2,6 @@
 # interchangeably. I'm settling on abbr to be both clear and concise.
 
 require 'nokogiri'
-require 'bart/etd'
-require 'bart/station/list'
 require 'bart/utils'
 
 # CLEANUP
@@ -12,7 +10,16 @@ require 'bart/estimate'
 
 module Bart
   class Station
-    attr_reader :abbr, :api_key, :stations, :load_first
+    attr_reader :api_key, :stations, :load_first, :name_lookup
+
+    # Used this instead of attr_writer in case we need to do cleanup when the abbr changes...
+    def abbr=(x)
+      @abbr = x.upcase
+    end
+
+    def abbr
+      @abbr
+    end
 
     # DEBUG
     attr_reader :document
@@ -26,7 +33,7 @@ module Bart
       @stations   = options[:stations]   ? options[:stations]   : nil
       @load_first = options[:load_first] ? options[:load_first] : true
 
-      @stations = self.load_stations if self.load_first
+      @stations = load_stations if load_first
     end
 
     def station_set?
@@ -34,19 +41,10 @@ module Bart
       true
     end
 
-    def self.from_xml(xml)
-      document   = Nokogiri::XML.parse(xml)
-      abbr       = document.css('abbr').text
-      departures = document.css('etd')
-
-      station = new(abbr)
-      station.departures = departures.inject([]) do |memo, i|
-        memo << Etd.new(i.to_s)
-      end
-    end
-
     def name
-      ID_TO_NAME[abbr]
+      @stations    ||= load_stations
+      @name_lookup ||= stations.inject({}) { |memo, i| memo[i[:abbr]] = i[:name]; memo }
+      @name_lookup[@abbr]
     end
 
     def departures
@@ -56,7 +54,7 @@ module Bart
 
     # fetch
     def load_departures
-      fail("You must set the station before loading departures!") unless self.station_set?
+      fail("You must set the station before loading departures!") unless station_set?
       params = {
         cmd: 'etd',
         orig: @abbr,

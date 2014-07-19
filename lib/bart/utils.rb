@@ -1,3 +1,5 @@
+require 'bart/etd'
+
 module Bart
   class Utils
     def self.build_query(params)
