@@ -34,7 +34,7 @@ module Bart
       @stations   = options[:stations]   ? options[:stations]   : nil
       @load_first = options[:load_first] ? options[:load_first] : true
 
-      @stations = load_stations if load_first
+      @stations = load_stations if (!@stations and load_first)
     end
 
     def station_set?
