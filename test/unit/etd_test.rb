@@ -10,7 +10,7 @@ class EtdTest < MiniTest::Unit::TestCase
 
   def test_should_have_a_destination
     etd = Etd.new(RESPONSE)
-    assert_equal('frmt', etd.destination.abbr)
+    assert_equal('FRMT', etd.destination.abbr)
   end
 
   def test_should_have_estimates

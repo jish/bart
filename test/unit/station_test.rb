@@ -9,25 +9,25 @@ class StationTest < MiniTest::Unit::TestCase
   include Bart
 
   def test_should_have_a_name
-    station = Station.new('powl')
-    assert_equal('Powell St. (SF)', station.name)
+    station = Station.new(abbr: 'powl')
+    assert_equal('Powell St.', station.name)
   end
 
   def test_should_initialize_with_an_uppercase_id
-    station = Station.new('rich')
+    station = Station.new(abbr: 'rich')
     assert_equal('Richmond', station.name)
   end
 
   def test_should_respond_to_abbr
-    station = Station.new('rock')
-    assert_equal('rock', station.abbr)
+    station = Station.new(abbr: 'rock')
+    assert_equal('ROCK', station.abbr)
   end
 
   def test_asking_for_departures_should_trigger_a_fetch
     uri = 'http://api.bart.gov/api/etd.aspx?cmd=etd&orig=rock&key=MW9S-E7SL-26DU-VV8V'
     FakeWeb.register_uri(:get, uri, :body => 'hello')
 
-    station = Station.new('rock')
+    station = Station.new(abbr: 'rock')
     station.departures
     assert FakeWeb.last_request
   end
@@ -36,7 +36,7 @@ class StationTest < MiniTest::Unit::TestCase
     uri = 'http://api.bart.gov/api/etd.aspx?cmd=etd&orig=rock&key=MW9S-E7SL-26DU-VV8V'
     FakeWeb.register_uri(:get, uri, :body => 'hello')
 
-    station = Station.new('rock')
+    station = Station.new(abbr: 'rock')
     station.departures
     assert FakeWeb.last_request
 
@@ -49,7 +49,7 @@ class StationTest < MiniTest::Unit::TestCase
     xml = File.read(File.expand_path('../../responses/station.xml', __FILE__))
     FakeWeb.register_uri(:get, uri, :body => xml)
 
-    station = Station.new('rock')
+    station = Station.new(abbr: 'rock')
     station.departures
 
     assert_equal(2, station.departures.size)
