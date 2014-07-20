@@ -12,7 +12,7 @@ module Bart
   class Station
     attr_reader :api_key, :stations, :load_first, :name_lookup
 
-    # Used this instead of attr_writer in case we need to do cleanup when the abbr changes...
+    # Used this instead of attr_writer so we can do cleanup when the abbr changes...
     def abbr=(x)
       @abbr = x.upcase
       @_departures = nil
@@ -22,12 +22,9 @@ module Bart
       @abbr
     end
 
-    # DEBUG
+    # This is used for debugging
     attr_reader :document
 
-    # OPTIMIZE If we have one station object, we don't need to initialize
-    # new ones over and over again. We'll leave it alone for now, for
-    # simplicity.
     def initialize(options = {})
       @abbr       = options[:abbr].to_s.upcase ? options[:abbr].to_s.upcase : nil
 
@@ -51,7 +48,6 @@ module Bart
 
     def departures
       @_departures ||= load_departures
-      @_departures
     end
 
     # fetch
