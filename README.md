@@ -7,7 +7,7 @@ Create a new station object
 
     require 'bart/station'
 
-    station = Bart::Station.new('ssan')
+    station = Bart::Station.new(abbr: 'ssan')
     station.name
     # => "South San Francisco"
 
@@ -22,7 +22,7 @@ And see when then next trains are supposed to arrive
 Output a list of upcoming departures:
 
     require 'bart'
-    puts Bart(:powl).departures
+    puts Bart(abbr: :powl).departures
     # San Francisco Int'l Airport 2, 22
     # Pittsburg/Bay Point 4, 19
 
