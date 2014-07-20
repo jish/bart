@@ -29,12 +29,13 @@ module Bart
     # new ones over and over again. We'll leave it alone for now, for
     # simplicity.
     def initialize(options = {})
-      @abbr       = options[:abbr]       ? options[:abbr]       : nil
+      @abbr       = options[:abbr].to_s.upcase ? options[:abbr].to_s.upcase : nil
+
       @api_key    = options[:api_key]    ? options[:api_key]    : 'MW9S-E7SL-26DU-VV8V'
       @stations   = options[:stations]   ? options[:stations]   : nil
       @load_first = options[:load_first] ? options[:load_first] : true
 
-      @stations = load_stations if (!@stations and load_first)
+      @stations = load_stations_if_not_loaded if (!@stations and load_first)
     end
 
     def station_set?
@@ -43,7 +44,7 @@ module Bart
     end
 
     def name
-      @stations    ||= load_stations
+      load_stations_if_not_loaded
       @name_lookup ||= stations.inject({}) { |memo, i| memo[i[:abbr]] = i[:name]; memo }
       @name_lookup[@abbr]
     end
@@ -65,6 +66,10 @@ module Bart
       response = Bart::Utils.ask_bart(params)
 
       Bart::Utils.parse_departures(response.body)
+    end
+
+    def load_stations_if_not_loaded
+      @stations ||= load_stations
     end
 
     def load_stations
