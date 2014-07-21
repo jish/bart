@@ -7,7 +7,8 @@ FakeWeb.allow_net_connect = false
 class StationTest < MiniTest::Unit::TestCase
 
   include Bart
-  def test_should_parse_stns_xml
+
+  def setup
     uri = 'http://api.bart.gov/api/stn.aspx?cmd=stns&key=MW9S-E7SL-26DU-VV8V'
     xml = File.read(File.expand_path('../../responses/stns.xml', __FILE__))
     FakeWeb.register_uri(:get, uri, :body => xml)
@@ -18,19 +19,28 @@ class StationTest < MiniTest::Unit::TestCase
     assert_equal('Powell St.', station.name)
   end
 
-  def test_should_initialize_with_an_uppercase_id
+  def test_should_initialize_with_an_uppercase_abbr
     station = Station.new(abbr: 'rich')
-    assert_equal('Richmond', station.name)
+    assert_equal('RICH', station.abbr)
   end
 
   def test_should_respond_to_abbr
-    station = Station.new(abbr: 'rock')
+    station = Station.new(abbr: 'ROCK')
     assert_equal('ROCK', station.abbr)
   end
 
-  def test_asking_for_departures_should_trigger_a_fetch
+  def test_should_respond_to_name
+    station = Station.new(abbr: 'DUBL')
+    assert_equal('Dublin/Pleasanton', station.name)
+  end
+
+  def setup_etd
     uri = 'http://api.bart.gov/api/etd.aspx?cmd=etd&orig=ROCK&key=MW9S-E7SL-26DU-VV8V'
     FakeWeb.register_uri(:get, uri, :body => 'hello')
+  end
+
+  def test_asking_for_departures_should_trigger_a_fetch
+    setup_etd
 
     station = Station.new(abbr: 'rock')
     station.departures
@@ -38,8 +48,7 @@ class StationTest < MiniTest::Unit::TestCase
   end
 
   def test_asking_for_departures_twice_should_not_trigger_a_fetch
-    uri = 'http://api.bart.gov/api/etd.aspx?cmd=etd&orig=ROCK&key=MW9S-E7SL-26DU-VV8V'
-    FakeWeb.register_uri(:get, uri, :body => 'hello')
+    setup_etd
 
     station = Station.new(abbr: 'rock')
     station.departures
@@ -50,7 +59,6 @@ class StationTest < MiniTest::Unit::TestCase
   end
 
   def test_should_parse_xml
-    test_should_parse_stns_xml
     uri = 'http://api.bart.gov/api/etd.aspx?cmd=etd&orig=ROCK&key=MW9S-E7SL-26DU-VV8V'
     xml = File.read(File.expand_path('../../responses/station.xml', __FILE__))
     FakeWeb.register_uri(:get, uri, :body => xml)
