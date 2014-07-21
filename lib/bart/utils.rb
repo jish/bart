@@ -3,7 +3,7 @@ require 'bart/etd'
 module Bart
   class Utils
     def self.build_query(params)
-      raise("You must specify a command! Possible commands can be found in Bart::Utils") if params[:cmd].nil? or params[:cmd].empty?
+      fail("You must specify a command! Possible commands can be found in Bart::Utils") if params[:cmd].nil? or params[:cmd].empty?
 
       case params[:cmd]
       when 'bsa', 'count', 'elev'
