@@ -14,7 +14,7 @@ module Bart
 
     # Used this instead of attr_writer so we can do cleanup when the abbr changes...
     def abbr=(x)
-      @abbr = x.upcase
+      @abbr = x ? x.to_s.upcase : nil
       @_departures = nil
     end
 
@@ -26,7 +26,7 @@ module Bart
     attr_reader :document
 
     def initialize(options = {})
-      @abbr       = options[:abbr].to_s.upcase ? options[:abbr].to_s.upcase : nil
+      @abbr       = options[:abbr]       ? options[:abbr].to_s.upcase : nil
 
       @api_key    = options[:api_key]    ? options[:api_key]    : 'MW9S-E7SL-26DU-VV8V'
       @stations   = options[:stations]   ? options[:stations]   : nil
