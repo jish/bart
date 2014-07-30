@@ -21,8 +21,8 @@ module Bart
     # OPTIMIZE If we have one station object, we don't need to initialize
     # new ones over and over again. We'll leave it alone for now, for
     # simplicity.
-    def initialize(abbr)
-      @abbr = abbr.downcase
+    def initialize(options = {})
+      @abbr = options[:abbr] ? options[:abbr].downcase : nil
     end
 
     def self.from_xml(xml)

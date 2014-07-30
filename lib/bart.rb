@@ -1,5 +1,5 @@
 require 'bart/station'
 
-def Bart(station_id)
-  Bart::Station.new(station_id.to_s)
+def Bart(options = {})
+  Bart::Station.new(options)
 end
