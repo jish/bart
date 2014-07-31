@@ -11,7 +11,7 @@ module Bart
       abbr      = document.css('abbreviation').text
       estimates = document.css('estimate')
 
-      @destination = Station.new(abbr)
+      @destination = Station.new(abbr: abbr)
       @estimates   = estimates.inject([]) { |memo, i| memo << Estimate.new(i.to_s) }
     end
 
