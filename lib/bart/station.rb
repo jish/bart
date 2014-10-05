@@ -55,8 +55,7 @@ module Bart
         :key => 'MW9S-E7SL-26DU-VV8V'
       }
 
-      params.merge(query_params)
-
+      params = params.merge(query_params)
       query_string = '?' + params.map { |key, value| [key, value] * '=' } * '&'
       ssan_etd = Net::HTTP::Get.new('/api/etd.aspx' + query_string )
 
