@@ -48,14 +48,17 @@ module Bart
     end
 
     # fetch
-    def load_departures (query_params = {})
+    def load_departures(query_params = {})
       params = {
         :cmd => 'etd',
         :orig => @abbr,
         :key => 'MW9S-E7SL-26DU-VV8V'
       }
 
-      params = params.merge(query_params)
+      [:plat, :dir].each do |param|
+        params[param] = query_params[param] if query_params.include?(param)
+      end
+
       query_string = '?' + params.map { |key, value| [key, value] * '=' } * '&'
       ssan_etd = Net::HTTP::Get.new('/api/etd.aspx' + query_string )
 

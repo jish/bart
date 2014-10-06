@@ -45,6 +45,7 @@ class StationTest < Minitest::Test
   end
 
   def test_load_departures_with_query
+    FakeWeb.clean_registry
     uri = 'http://api.bart.gov/api/etd.aspx?cmd=etd&orig=rock&key=MW9S-E7SL-26DU-VV8V&plat=1&dir=s'
     FakeWeb.register_uri(:get, uri, :body => 'hello')
 
