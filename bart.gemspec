@@ -1,7 +1,6 @@
 Gem::Specification.new do |s|
   s.name = "bart"
   s.version = "0.2"
-  s.date = "2010-11-13"
 
   s.summary = "A ruby wrapper around the BART API."
   s.description = "Access the Bay Area Rapid Transit API in Ruby."
