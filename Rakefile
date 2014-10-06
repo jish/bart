@@ -8,7 +8,8 @@ end
 task :ci => [:test]
 task :default => [:test]
 
+# This task allows you to hook into the pre-commit gem to run the test suite
+# before each commit.
 namespace :pre_commit do
-  desc "run the tests"
   task :ci => [:test]
 end
