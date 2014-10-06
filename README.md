@@ -27,3 +27,9 @@ Output a list of upcoming departures:
     # Pittsburg/Bay Point 4, 19
 
 _NOTE: This is still beta software. All public APIs are subject to change_
+
+### Testing
+
+To run the tests run the `test` Rake task:
+
+    $ rake test
