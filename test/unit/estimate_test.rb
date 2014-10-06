@@ -1,7 +1,7 @@
 require 'minitest/autorun'
 require 'bart/estimate'
 
-class EstimateTest < MiniTest::Unit::TestCase
+class EstimateTest < Minitest::Test
 
   include Bart
 

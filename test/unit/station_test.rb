@@ -4,7 +4,7 @@ require 'bart/station'
 
 FakeWeb.allow_net_connect = false
 
-class StationTest < MiniTest::Unit::TestCase
+class StationTest < Minitest::Test
 
   include Bart
 

@@ -1,7 +1,7 @@
 require 'minitest/autorun'
 require 'bart/etd'
 
-class EtdTest < MiniTest::Unit::TestCase
+class EtdTest < Minitest::Test
 
   include Bart
 
