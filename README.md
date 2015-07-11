@@ -1,6 +1,8 @@
 
 A Ruby wrapper around the BART API. [http://api.bart.gov/](http://api.bart.gov/)
 
+[![Current gem version](https://badge.fury.io/rb/bart.svg)](https://rubygems.org/gems/bart)
+
 ## Usage
 
 Create a new station object
