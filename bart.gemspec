@@ -14,4 +14,6 @@ Gem::Specification.new do |s|
 
   s.add_dependency "nokogiri", "~> 1.6"
   s.add_development_dependency "fakeweb", "~> 1.3"
+  s.add_development_dependency "rake"
+  s.add_development_dependency "minitest", "~> 5.0"
 end
