@@ -9,28 +9,41 @@ class EstimateTest < Minitest::Test
   RESPONSE = File.read(response)
 
   def test_should_respond_to_minutes
-    estimate = Estimate.new(RESPONSE)
     assert_equal(21, estimate.minutes)
   end
 
   def test_should_respond_to_platform
-    estimate = Estimate.new(RESPONSE)
     assert_equal(2, estimate.platform)
   end
 
   def test_should_respond_to_direction
-    estimate = Estimate.new(RESPONSE)
     assert_equal('South', estimate.direction)
   end
 
   def test_should_respond_to_length
-    estimate = Estimate.new(RESPONSE)
     assert_equal(5, estimate.length)
   end
 
   def test_should_respond_to_seconds
-    estimate = Estimate.new(RESPONSE)
     assert_equal(1260, estimate.seconds)
+  end
+
+  def test_should_respond_to_color
+    assert_equal('ORANGE', estimate.color)
+  end
+
+  def test_should_respond_to_hexcolor
+    assert_equal('#ff9933', estimate.hexcolor)
+  end
+
+  def test_should_respond_to_bikeflag
+    assert_equal(true, estimate.bikeflag)
+  end
+
+  private
+
+  def estimate
+    Estimate.new(RESPONSE)
   end
 
 end

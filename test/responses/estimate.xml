@@ -3,4 +3,7 @@
   <platform>2</platform>
   <direction>South</direction>
   <length>5</length>
+  <color>ORANGE</color>
+  <hexcolor>#ff9933</hexcolor>
+  <bikeflag>1</bikeflag>
 </estimate>
