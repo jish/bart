@@ -3,7 +3,7 @@ require 'nokogiri'
 module Bart
   class Estimate
 
-    attr_reader :minutes, :platform, :direction, :length
+    attr_reader :minutes, :platform, :direction, :length, :color, :hexcolor, :bikeflag
 
     def initialize(xml)
       document = Nokogiri::XML.parse(xml)
@@ -12,6 +12,9 @@ module Bart
       @platform  = document.css('platform').text.to_i
       @direction = document.css('direction').text
       @length    = document.css('length').text.to_i
+      @color     = document.css('color').text
+      @hexcolor  = document.css('hexcolor').text
+      @bikeflag  = document.css('bikeflag').text.to_i == 1
     end
 
     def seconds
